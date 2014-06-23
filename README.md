@@ -16,7 +16,7 @@ New Relic container running for `docker run`
 
 * Execute `docker run` command.
 
-* Please be Replaced by your newrelic license key is `YOUR_NEW_RELIC_LICENSE_KEY`
+**Please be Replaced by your newrelic license key is `YOUR_NEW_RELIC_LICENSE_KEY`**
 
         docker run -d -e NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY -h YOUR_HOSTNAME uzyexe/newrelic
 
@@ -28,10 +28,25 @@ New Relic container auto-running configure for cloud-config.yml (for Disk Bootin
 
 * Add valid values `units` and `write_files` in `cloud-config.yml`
 
-* Please be Replaced by your newrelic license key is `YOUR_NEW_RELIC_LICENSE_KEY`
+**Please be Replaced by your newrelic license key is `YOUR_NEW_RELIC_LICENSE_KEY`**
 
         coreos:
           units:
+            - name: coreos-setup-environment.service
+              command: restart
+              content: |
+                  [Unit]
+                  Description=Modifies /etc/environment for CoreOS
+                  RequiresMountsFor=/usr/share/oem
+                  ConditionPathIsMountPoint=/usr
+                   
+                  [Service]
+                  Type=oneshot
+                  RemainAfterExit=yes
+                  ExecStart=/usr/bin/coreos-setup-environment /etc/environment
+                  
+                  [Install]
+                  WantedBy=multi-user.target
             - name: coreos-setup-hostname.service
               command: start
               content: |
@@ -86,11 +101,25 @@ New Relic container auto-running configure for cloud-config.yml (for PXE Booting
 
 * Add valid values `units` and `write_files` in `cloud-config.yml`
 
-* Please be Replaced by your newrelic license key is `YOUR_NEW_RELIC_LICENSE_KEY`
-
+**Please be Replaced by your newrelic license key is `YOUR_NEW_RELIC_LICENSE_KEY`**
 
         coreos:
           units:
+            - name: coreos-setup-environment.service
+              command: restart
+              content: |
+                  [Unit]
+                  Description=Modifies /etc/environment for CoreOS
+                  RequiresMountsFor=/usr/share/oem
+                  ConditionPathIsMountPoint=/usr
+                   
+                  [Service]
+                  Type=oneshot
+                  RemainAfterExit=yes
+                  ExecStart=/usr/bin/coreos-setup-environment /etc/environment
+                  
+                  [Install]
+                  WantedBy=multi-user.target
             - name: coreos-setup-hostname.service
               command: start
               content: |
