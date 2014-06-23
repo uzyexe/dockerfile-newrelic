@@ -47,18 +47,18 @@ New Relic container auto-running configure for cloud-config.yml (for Disk Bootin
                   WantedBy=multi-user.target
             - name: docker.service
               command: start
-            - name: newrelic-sysmond.service
+            - name: newrelic-client.service
               command: start
               content: |
                   [Unit]
-                  Description=newrelic-sysmond
+                  Description=newrelic-client
 
                   [Service]
                   EnvironmentFile=/etc/environment
                   TimeoutStartSec=20m
-                  ExecStartPre=CONTAINER_ID=`/usr/bin/docker ps --no-trunc -a -q | grep "uzyexe/newrelic" | awk '{print $1}'` && docker rm ${CONTAINER_ID}
-                  ExecStart=/usr/bin/docker run --name newrelic-sysmond --rm --env="NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY" -h ${HOSTNAME} uzyexe/newrelic
-                  ExecStop=/usr/bin/docker kill newrelic-sysmond
+                  ExecStartPre=-/usr/bin/docker rm -f newrelic-client
+                  ExecStart=/usr/bin/docker run --name newrelic-client --rm --env="NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY" -h ${HOSTNAME} uzyexe/newrelic
+                  ExecStop=/usr/bin/docker kill newrelic-client
 
                   [Install]
                   WantedBy=multi-user.target
