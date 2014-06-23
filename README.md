@@ -14,7 +14,7 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
 
 * Execute `docker run` command.
 
-**Please note: Replaced by your newrelic license key is `YOUR_NEW_RELIC_LICENSE_KEY`**
+**Please note: Replaced by your newrelic license key is `YOUR_NEW_RELIC_LICENSE_KEY` and `YOUR_HOSTNAME`**
 
     docker run -d -e NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY -h YOUR_HOSTNAME uzyexe/newrelic
 
