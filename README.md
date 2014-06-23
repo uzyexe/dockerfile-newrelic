@@ -20,11 +20,11 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
 
 --
 
-### case 2: New Relic container auto-running configure for cloud-config.yml (for Disk Booting coreos)
+### case 2: Auto-Running configure for cloud-config.yml (for Disk Booting coreos)
 
 * Add valid values `units` and `write_files` in `cloud-config.yml`
 
-**Please note: be Replaced by your newrelic license key is `YOUR_NEW_RELIC_LICENSE_KEY`**
+**Please note: Replaced by your newrelic license key is `YOUR_NEW_RELIC_LICENSE_KEY`**
 
     coreos:
       units:
@@ -91,7 +91,7 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
 
 --
 
-### case 3: New Relic container auto-running configure for cloud-config.yml (for PXE Booting coreos)
+### case 3: Auto-Running configure for cloud-config.yml (for PXE Booting coreos)
 
 * Add valid values `units` and `write_files` in `cloud-config.yml`
 
@@ -171,7 +171,7 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
 
 [https://gist.github.com/uzyexe/5646eef7a4ca42d79f04](https://gist.github.com/uzyexe/5646eef7a4ca42d79f04)
 
-## About NewRelic
+## New Relic
 
 [Getting started](https://docs.newrelic.com/docs/server/new-relic-servers)
 
