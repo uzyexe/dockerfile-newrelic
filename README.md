@@ -55,9 +55,6 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
               Type=oneshot
               RemainAfterExit=yes
               ExecStart=/bin/sh /tmp/coreos-setup-hostname /etc/environment
-              
-              [Install]
-              WantedBy=multi-user.target
         - name: docker.service
           command: start
         - name: newrelic-client.service
@@ -74,9 +71,6 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
               ExecStartPre=-/usr/bin/docker rm -f newrelic-client
               ExecStart=/usr/bin/docker run --name newrelic-client --rm --env="NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY" -h ${HOSTNAME} uzyexe/newrelic
               ExecStop=/usr/bin/docker kill newrelic-client
-              
-              [Install]
-              WantedBy=multi-user.target
 
     write_files:
       - path: /tmp/coreos-setup-hostname
@@ -110,7 +104,7 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
               Description=Modifies /etc/environment for CoreOS
               RequiresMountsFor=/usr/share/oem
               ConditionPathIsMountPoint=/usr
-               
+              
               [Service]
               Type=oneshot
               RemainAfterExit=yes
@@ -130,9 +124,6 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
               Type=oneshot
               RemainAfterExit=yes
               ExecStart=/bin/sh /tmp/coreos-setup-hostname /etc/environment
-              
-              [Install]
-              WantedBy=multi-user.target
         - name: docker.service
           command: restart
           content: |
@@ -144,9 +135,6 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
               Environment="TMPDIR=/var/tmp/"
               ExecStartPre=/bin/mount --make-rprivate /
               ExecStart=/usr/bin/docker -d -r=false -H fd://
-              
-              [Install]
-              WantedBy=multi-user.target
         - name: newrelic-client.service
           command: start
           content: |
@@ -161,9 +149,6 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
               ExecStart=/usr/bin/docker run --name newrelic-client --rm --env="NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY" -h ${HOSTNAME} uzyexe/newrelic
               ExecStop=/usr/bin/docker kill newrelic-client
               
-              [Install]
-              WantedBy=multi-user.target
-
     write_files:
       - path: /tmp/coreos-setup-hostname
         content: |
