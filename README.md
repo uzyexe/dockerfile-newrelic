@@ -135,6 +135,9 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
               Environment="TMPDIR=/var/tmp/"
               ExecStartPre=/bin/mount --make-rprivate /
               ExecStart=/usr/bin/docker -d -r=false -H fd://
+              
+              [Install]
+              WantedBy=multi-user.target
         - name: newrelic-client.service
           command: start
           content: |
