@@ -16,13 +16,13 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
 
 * Execute `docker run` command.
 
+
     docker run -d -e NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY -h `hostname` uzyexe/newrelic
 
 --
 
 ### case 2: Auto-Running configure for cloud-config.yml (for Disk Booting coreos)
 
-* Add valid values `units` and `write_files` in `cloud-config.yml`
 
     coreos:
       units:
@@ -46,9 +46,8 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
 
 ### case 3: Auto-Running configure for cloud-config.yml (for PXE Booting coreos)
 
-* Add valid values `units` and `write_files` in `cloud-config.yml`
-
 **Please note: Replaced by your newrelic license key is `YOUR_NEW_RELIC_LICENSE_KEY`**
+
 
     coreos:
       units:
