@@ -63,6 +63,18 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
               
               [Install]
               WantedBy=multi-user.target
+        - name: coreos-setup-hostname.service
+          command: start
+          content: |
+              [Unit]
+              Description=Add HOSTNAME /etc/environment for CoreOS
+              Requires=coreos-setup-environment.service
+              After=coreos-setup-environment.service
+              
+              [Service]
+              Type=oneshot
+              RemainAfterExit=yes
+              ExecStart=/bin/sh /tmp/coreos-setup-hostname /etc/environment
         - name: newrelic-client.service
           command: start
           content: |
@@ -71,8 +83,22 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
               
               [Service]
               TimeoutStartSec=20m
-              ExecStart=/usr/bin/docker run --name newrelic-client --rm --env="NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY" -h `hostname` uzyexe/newrelic
+              ExecStart=/usr/bin/docker run --name newrelic-client --rm --env="NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY" -h ${HOSTNAME} uzyexe/newrelic
               ExecStop=/usr/bin/docker kill newrelic-client
+    
+    write_files:
+      - path: /tmp/coreos-setup-hostname
+        content: |
+            #!/bin/bash +x
+            ENV=$1
+            
+            if [ -z "$ENV" ]; then
+              echo usage: $0 /etc/environment
+              exit 1
+            fi
+            
+            grep -c HOSTNAME $ENV || echo HOSTNAME=$HOSTNAME >> $ENV
+
 
 [https://gist.github.com/uzyexe/5646eef7a4ca42d79f04](https://gist.github.com/uzyexe/5646eef7a4ca42d79f04)
 
