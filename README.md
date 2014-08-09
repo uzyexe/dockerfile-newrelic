@@ -35,7 +35,7 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
               [Service]
               TimeoutStartSec=20m
               ExecStartPre=-/usr/bin/docker rm -f newrelic-client
-              ExecStart=/usr/bin/docker run --name newrelic-client --rm --env="NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY" -h `hostname` uzyexe/newrelic
+              ExecStart=/bin/bash -c 'HOSTNAME=`/usr/bin/hostname`; docker run --name newrelic-client --rm --env="NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY" -h $HOSTNAME uzyexe/newrelic'
               ExecStop=/usr/bin/docker kill newrelic-client
 
 [https://gist.github.com/uzyexe/bc943d6099a8fbaa9cd7](https://gist.github.com/uzyexe/bc943d6099a8fbaa9cd7)
