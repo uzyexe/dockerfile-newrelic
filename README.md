@@ -1,6 +1,6 @@
 # uzyexe/newrelic
 
-Run the New Relic server monitor daemon for docker and coreos server.
+Run the New Relic server monitor daemon.
 
 ## Dockerfile
 
@@ -12,85 +12,32 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
 
 **Please note: Replaced by your newrelic license key is `YOUR_NEW_RELIC_LICENSE_KEY`**
 
-### case 1: docker run
+### docker run
 
 
     docker run -d -e NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY -h `hostname` uzyexe/newrelic
 
 --
 
-### case 2: Auto-Running configure for cloud-config.yml (for Disk Booting coreos)
+### cloud-config.yml
 
-
-    coreos:
-      units:
-        - name: docker.service
-          command: start
-        - name: newrelic-client.service
+      units: 
+        - name: newrelic.service
           command: start
           content: |
-              [Unit]
-              Description=newrelic-client
-              
-              [Service]
-              Restart=always
-              TimeoutStartSec=20m
-              ExecStartPre=-/usr/bin/docker rm -f newrelic-client
-              ExecStart=/bin/bash -c 'HOSTNAME=`/usr/bin/hostname`; docker run --name newrelic-client --rm --env="NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY" -h $HOSTNAME uzyexe/newrelic'
-              ExecStop=/usr/bin/docker kill newrelic-client
-
-[https://gist.github.com/uzyexe/bc943d6099a8fbaa9cd7](https://gist.github.com/uzyexe/bc943d6099a8fbaa9cd7)
-
---
-
-### case 3: Auto-Running configure for cloud-config.yml (for PXE Booting coreos)
-
-**Please note: Replaced by your newrelic license key is `YOUR_NEW_RELIC_LICENSE_KEY`**
-
-
-    coreos:
-      units:
-        - name: docker.service
-          command: restart
-          content: |
-              [Unit]
-              Description=Docker Application Container Engine
-              Documentation=http://docs.docker.io
-              
-              [Service]
-              Environment="TMPDIR=/var/tmp/"
-              ExecStartPre=/bin/mount --make-rprivate /
-              ExecStart=/usr/bin/docker -d -r=false -H fd://
-              
-              [Install]
-              WantedBy=multi-user.target
-        - name: newrelic-client.service
-          command: start
-          content: |
-              [Unit]
-              Description=newrelic-client
-              
-              [Service]
-              Restart=always
-              TimeoutStartSec=20m
-              ExecStart=/bin/bash -c 'HOSTNAME=`/usr/bin/hostname`; docker run --name newrelic-client --rm --env="NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY" -h $HOSTNAME uzyexe/newrelic'
-              ExecStop=/usr/bin/docker kill newrelic-client
-    
-    write_files:
-      - path: /tmp/coreos-setup-hostname
-        content: |
-            #!/bin/bash +x
-            ENV=$1
+            [Unit]
+            Description=newrelic
             
-            if [ -z "$ENV" ]; then
-              echo usage: $0 /etc/environment
-              exit 1
-            fi
-            
-            grep -c HOSTNAME $ENV || echo HOSTNAME=$HOSTNAME >> $ENV
+            [Service]
+            Restart=always
+            RestartSec=300
+            TimeoutStartSec=10m
+            ExecStartPre=-/usr/bin/docker stop newrelic
+            ExecStartPre=-/usr/bin/docker rm -f newrelic
+            ExecStartPre=/usr/bin/docker pull uzyexe/newrelic
+            ExecStart=/bin/bash -c '/usr/bin/docker run --rm --name newrelic --env="NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY" -h `/usr/bin/hostname` uzyexe/newrelic'
+            ExecStop=/usr/bin/docker stop newrelic
 
-
-[https://gist.github.com/uzyexe/5646eef7a4ca42d79f04](https://gist.github.com/uzyexe/5646eef7a4ca42d79f04)
 
 ## New Relic
 
