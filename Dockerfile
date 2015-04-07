@@ -3,17 +3,17 @@ FROM debian:squeeze
 ENV NEW_RELIC_LICENSE_KEY YOUR_LICENSE_KEY
 
 # apt-get update
-RUN apt-get update -qq && apt-get install -yq ca-certificates wget
+RUN apt-get update -q && apt-get install -yq ca-certificates wget
 
 # install new relic server monitoring
-RUN echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list \
-    wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add - \
-    apt-get update -qa \
+RUN echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list && \
+    wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
+    apt-get update -q && \
     apt-get install -y -qq newrelic-sysmond
 
 # supervisor
-RUN apt-get install -y -qq supervisor \
-    mkdir -p /etc/supervisor/conf.d/ \
+RUN apt-get install -y -qq supervisor && \
+    mkdir -p /etc/supervisor/conf.d/ && \
     mkdir -p /var/log/supervisor/
 ADD supervisord.conf /etc/supervisor/supervisord.conf
 
