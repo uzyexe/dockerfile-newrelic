@@ -6,16 +6,16 @@ ENV NEW_RELIC_LICENSE_KEY YOUR_LICENSE_KEY
 RUN apt-get update -qq && apt-get install -yq ca-certificates wget
 
 # install new relic server monitoring
-RUN echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list
-RUN wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add -
-RUN apt-get update
-RUN apt-get install -y -qq newrelic-sysmond
+RUN echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list \
+    wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add - \
+    apt-get update -qa \
+    apt-get install -y -qq newrelic-sysmond
 
 # supervisor
-RUN apt-get install -y -qq supervisor
+RUN apt-get install -y -qq supervisor \
+    mkdir -p /etc/supervisor/conf.d/ \
+    mkdir -p /var/log/supervisor/
 ADD supervisord.conf /etc/supervisor/supervisord.conf
-RUN mkdir -p /etc/supervisor/conf.d/
-RUN mkdir -p /var/log/supervisor/
 
 # supervisor-newrelic
 ADD supervisord-newrelic.conf /etc/supervisor/conf.d/newrelic.conf
