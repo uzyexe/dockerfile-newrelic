@@ -1,5 +1,4 @@
 FROM debian:squeeze
-MAINTAINER Shuji Yamada (uzy.exe@gmail.com)
 
 ENV NEW_RELIC_LICENSE_KEY YOUR_LICENSE_KEY
 
