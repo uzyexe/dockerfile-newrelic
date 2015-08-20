@@ -14,29 +14,22 @@ This Docker image is based on the official [debian:squeeze](https://index.docker
 
 ### docker run
 
+In order to give newrelic full access for monitoring there are a few unusual flags you'll need.
 
-    docker run -d -e NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY -h `hostname` uzyexe/newrelic
+    docker run -d \
+        -v /var/run/docker.sock:/var/run/docker.sock:ro \
+        -e NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY \
+        --privileged \
+        --pid="host" \
+        --net="host" \
+        --ipc="host" \
+        -v /sys:/sys \
+        -v /dev:/dev \
+        --restart=always \
+        --name newrelic \
+        uzyexe/newrelic
 
 --
-
-### cloud-config.yml
-
-      units: 
-        - name: newrelic.service
-          command: start
-          content: |
-            [Unit]
-            Description=newrelic
-            
-            [Service]
-            Restart=always
-            RestartSec=300
-            TimeoutStartSec=10m
-            ExecStartPre=-/usr/bin/docker stop newrelic
-            ExecStartPre=-/usr/bin/docker rm -f newrelic
-            ExecStartPre=/usr/bin/docker pull uzyexe/newrelic
-            ExecStart=/bin/bash -c '/usr/bin/docker run --rm --name newrelic --env="NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY" -h `/usr/bin/hostname` uzyexe/newrelic'
-            ExecStop=/usr/bin/docker stop newrelic
 
 
 ## New Relic
