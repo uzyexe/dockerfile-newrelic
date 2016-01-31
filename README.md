@@ -20,7 +20,7 @@ In order to give newrelic full access for monitoring there are a few unusual fla
         --name="newrelic" \
         --net="host" \
         --pid="host" \
-        --env="NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}" \
+        --env="NEW_RELIC_LICENSE_KEY=${YOUR_NEW_RELIC_LICENSE_KEY}" \
         --volume="/var/run/docker.sock:/var/run/docker.sock:ro" \
         --volume="/sys/fs/cgroup/:/sys/fs/cgroup:ro" \
         --volume="/dev:/dev" \
