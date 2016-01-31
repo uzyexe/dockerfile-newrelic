@@ -1,4 +1,4 @@
-# uzyexe/newrelic
+# uzyexe/newrelic [![Circle CI](https://circleci.com/gh/uzyexe/dockerfile-newrelic.svg?style=svg)](https://circleci.com/gh/uzyexe/dockerfile-newrelic)
 
 Run the New Relic server monitor daemon.
 
