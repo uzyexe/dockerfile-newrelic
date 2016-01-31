@@ -1,4 +1,4 @@
-FROM debian:squeeze
+FROM debian:jessie
 
 ENV NEW_RELIC_LICENSE_KEY YOUR_LICENSE_KEY
 
