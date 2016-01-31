@@ -6,7 +6,7 @@ Run the New Relic server monitor daemon.
 
 [**Trusted Build**](https://hub.docker.com/r/uzyexe/newrelic/)
 
-This Docker image is based on the official [debian:squeeze](https://hub.docker.com/_/debian/) base image.
+This Docker image is based on the official [debian:jessie](https://hub.docker.com/_/debian/) base image.
 
 ## Using
 
