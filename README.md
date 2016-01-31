@@ -4,9 +4,9 @@ Run the New Relic server monitor daemon.
 
 ## Dockerfile
 
-[**Trusted Build**](https://index.docker.io/u/uzyexe/newrelic)
+[**Trusted Build**](https://hub.docker.com/r/uzyexe/newrelic/)
 
-This Docker image is based on the official [debian:squeeze](https://index.docker.io/_/debian/) base image.
+This Docker image is based on the official [debian:squeeze](https://hub.docker.com/_/debian/) base image.
 
 ## Using
 
@@ -34,6 +34,6 @@ In order to give newrelic full access for monitoring there are a few unusual fla
 
 ## New Relic
 
-[Getting started](https://docs.newrelic.com/docs/server/new-relic-servers)
+[Getting started](https://docs.newrelic.com/docs/servers/new-relic-servers-linux/getting-started/new-relic-servers-linux)
 
-[Release Notes](https://docs.newrelic.com/docs/releases/linux_server/)
+[Release Notes](https://docs.newrelic.com/docs/release-notes/server-release-notes/servers-linux-release-notes)
