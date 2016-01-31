@@ -17,16 +17,14 @@ This Docker image is based on the official [debian:jessie](https://hub.docker.co
 In order to give newrelic full access for monitoring there are a few unusual flags you'll need.
 
     docker run -d \
-        -v /var/run/docker.sock:/var/run/docker.sock:ro \
-        -e NEW_RELIC_LICENSE_KEY=YOUR_NEW_RELIC_LICENSE_KEY \
-        --privileged \
-        --pid="host" \
+        --name="newrelic" \
         --net="host" \
-        --ipc="host" \
-        -v /sys:/sys \
-        -v /dev:/dev \
+        --pid="host" \
+        --env="NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}" \
+        --volume="/var/run/docker.sock:/var/run/docker.sock:ro" \
+        --volume="/sys/fs/cgroup/:/sys/fs/cgroup:ro" \
+        --volume="/dev:/dev" \
         --restart=always \
-        --name newrelic \
         uzyexe/newrelic
 
 --
