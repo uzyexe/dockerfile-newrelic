@@ -1,3 +1,5 @@
+[![](https://badge.imagelayers.io/uzyexe/newrelic:latest.svg)](https://imagelayers.io/?images=uzyexe/newrelic:latest 'Get your own badge on imagelayers.io')
+
 # uzyexe/newrelic [![Circle CI](https://circleci.com/gh/uzyexe/dockerfile-newrelic.svg?style=svg)](https://circleci.com/gh/uzyexe/dockerfile-newrelic)
 
 Run the New Relic server monitor daemon.
