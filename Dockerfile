@@ -1,7 +1,7 @@
 FROM debian:jessie
 
 ENV NEW_RELIC_LICENSE_KEY YOUR_LICENSE_KEY
-ENV NEW_RELIC_SYSMOND_VERSION 2.3.0.129
+ENV NEW_RELIC_SYSMOND_VERSION 2.3.0.132
 
 # apt-get update, install newrelic server monitoring, and then clean
 RUN apt-get update -q && apt-get install -yq ca-certificates wget procps && \
