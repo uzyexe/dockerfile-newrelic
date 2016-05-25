@@ -35,3 +35,12 @@ In order to give newrelic full access for monitoring there are a few unusual fla
 [Getting started](https://docs.newrelic.com/docs/servers/new-relic-servers-linux/getting-started/new-relic-servers-linux)
 
 [Release Notes](https://docs.newrelic.com/docs/release-notes/server-release-notes/servers-linux-release-notes)
+
+
+# Authors
+
+* Shuji Yamada (<uzy.exe@gmail.com>)
+
+## License
+
+This project is licensed under the terms of the MIT license.
