@@ -1,24 +1,20 @@
-FROM debian:jessie
+FROM alpine:3.3
 
 ENV NEW_RELIC_LICENSE_KEY YOUR_LICENSE_KEY
 ENV NEW_RELIC_SYSMOND_VERSION 2.3.0.132
+ENV GLIBC_VERSION 2.23-r1
 
-# apt-get update, install newrelic server monitoring, and then clean
-RUN apt-get update -q && apt-get install -yq ca-certificates wget procps && \
-    echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list && \
-    wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
-    apt-get update -q && \
-    apt-get install -y -qq newrelic-sysmond=$NEW_RELIC_SYSMOND_VERSION && \
-    apt-get clean
+RUN apk add --update ca-certificates && \
+    wget -q "https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk" && \
+    apk add --allow-untrusted glibc-${GLIBC_VERSION}.apk && \
+    wget https://download.newrelic.com/server_monitor/release/newrelic-sysmond-${NEW_RELIC_SYSMOND_VERSION}-linux.tar.gz && \
+    tar xvzf newrelic-sysmond-${NEW_RELIC_SYSMOND_VERSION}-linux.tar.gz && \
+    cp newrelic-sysmond-${NEW_RELIC_SYSMOND_VERSION}-linux/daemon/nrsysmond.x64 /usr/sbin/nrsysmond && \
+    chmod 755 /usr/sbin/nrsysmond && \
+    cp newrelic-sysmond-${NEW_RELIC_SYSMOND_VERSION}-linux/scripts/nrsysmond-config /usr/sbin/ && \
+    chmod 755 /usr/sbin/nrsysmond-config && \
+    mkdir /etc/newrelic && \
+    cp newrelic-sysmond-${NEW_RELIC_SYSMOND_VERSION}-linux/nrsysmond.cfg /etc/newrelic/nrsysmond.cfg
 
-# supervisor
-RUN apt-get install -y -qq supervisor && \
-    mkdir -p /etc/supervisor/conf.d/ && \
-    mkdir -p /var/log/supervisor/
-ADD supervisord.conf /etc/supervisor/supervisord.conf
-
-# supervisor-newrelic
-ADD supervisord-newrelic.conf /etc/supervisor/conf.d/newrelic.conf
-
-# enabled supervisord
-CMD nrsysmond-config --set license_key=$NEW_RELIC_LICENSE_KEY && supervisord -n
+CMD nrsysmond-config --set license_key=$NEW_RELIC_LICENSE_KEY && \
+    nrsysmond -c /etc/newrelic/nrsysmond.cfg -l /dev/stdout -f
