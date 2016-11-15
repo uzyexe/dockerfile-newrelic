@@ -4,7 +4,7 @@ ENV NEW_RELIC_LICENSE_KEY YOUR_LICENSE_KEY
 ENV NEW_RELIC_SYSMOND_VERSION 2.3.0.132
 ENV GLIBC_VERSION 2.23-r3
 
-RUN apk add --update ca-certificates && \
+RUN apk add --update ca-certificates wget && \
     wget -q "https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk" && \
     apk add --allow-untrusted glibc-${GLIBC_VERSION}.apk && \
     wget https://download.newrelic.com/server_monitor/release/newrelic-sysmond-${NEW_RELIC_SYSMOND_VERSION}-linux.tar.gz && \
