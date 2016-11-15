@@ -2,7 +2,7 @@ FROM alpine:3.3
 
 ENV NEW_RELIC_LICENSE_KEY YOUR_LICENSE_KEY
 ENV NEW_RELIC_SYSMOND_VERSION 2.3.0.132
-ENV GLIBC_VERSION 2.23-r1
+ENV GLIBC_VERSION 2.23-r3
 
 RUN apk add --update ca-certificates && \
     wget -q "https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk" && \
