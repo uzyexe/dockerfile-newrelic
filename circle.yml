@@ -14,7 +14,7 @@ dependencies:
 
 test:
   override:
-    - docker run uzyexe/newrelic /usr/sbin/nrsysmond -v
+    - docker run -e NEW_RELIC_LICENSE_KEY="$NEW_RELIC_LICENSE_KEY" uzyexe/newrelic /usr/sbin/nrsysmond -v
 
 deployment:
   hub:
