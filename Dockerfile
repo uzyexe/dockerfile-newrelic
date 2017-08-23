@@ -14,7 +14,11 @@ RUN apk add --update ca-certificates wget && \
     cp newrelic-sysmond-${NEW_RELIC_SYSMOND_VERSION}-linux/scripts/nrsysmond-config /usr/sbin/ && \
     chmod 755 /usr/sbin/nrsysmond-config && \
     mkdir /etc/newrelic && \
-    cp newrelic-sysmond-${NEW_RELIC_SYSMOND_VERSION}-linux/nrsysmond.cfg /etc/newrelic/nrsysmond.cfg
+    cp newrelic-sysmond-${NEW_RELIC_SYSMOND_VERSION}-linux/nrsysmond.cfg /etc/newrelic/nrsysmond.cfg && \
+    mkdir -p /usr/local/bin
 
-CMD nrsysmond-config --set license_key=$NEW_RELIC_LICENSE_KEY && \
-    nrsysmond -c /etc/newrelic/nrsysmond.cfg -l /dev/stdout -f
+COPY entry.sh /usr/local/bin/entry.sh
+
+ENTRYPOINT ["/usr/local/bin/entry.sh"]
+
+CMD ["nrsysmond", "-c", "/etc/newrelic/nrsysmond.cfg", "-l", "/dev/stdout", "-f"]
