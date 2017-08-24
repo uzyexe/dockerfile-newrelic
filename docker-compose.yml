@@ -1,0 +1,14 @@
+version: '3'
+services:
+  newrelic-servers:
+    environment:
+      NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
+    tty: true
+    image: uzyexe/newrelic:latest
+    container_name: "newrelic"
+    volumes:
+      - /dev:/dev
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    stdin_open: true
+    network_mode: "host"

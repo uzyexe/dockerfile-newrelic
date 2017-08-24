@@ -14,6 +14,10 @@ This Docker image is based on the official [alpine:3.3](https://hub.docker.com/_
 
 **Please note: Replaced by your newrelic license key is `YOUR_NEW_RELIC_LICENSE_KEY`**
 
+### docker compose
+
+    docker-compose up
+
 ### docker run
 
 In order to give newrelic full access for monitoring there are a few unusual flags you'll need.
@@ -28,8 +32,6 @@ In order to give newrelic full access for monitoring there are a few unusual fla
         --volume="/dev:/dev" \
         --restart=always \
         uzyexe/newrelic
-
---
 
 
 ## New Relic
